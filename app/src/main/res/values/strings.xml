@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">iTantra</string>
+    <string name="title_transceiver">iTANTRA — Neural Transceiver</string>
+    <string name="subtitle_transceiver">ISRO SIH26173 • Zero-Internet Air-Gapped</string>
+    <string name="status_disconnected">Disconnected (0% Internet)</string>
+    <string name="status_discovering">Scanning for Nearby Phones…</string>
+    <string name="status_connected">P2P Radio Link Active</string>
+    <string name="btn_discover">Find Nearby Phones</string>
+    <string name="btn_create_group">Host Radio Node</string>
+    <string name="btn_ptt">🎙️ PUSH TO TALK</string>
+    <string name="btn_sos">🚨 LEVEL 0 SOS</string>
+    <string name="hint_type_message">Type or record speech…</string>
+</resources>

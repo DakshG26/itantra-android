@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="isro_blue">#0057B8</color>
+    <color name="isro_blue_dark">#0A2540</color>
+    <color name="isro_blue_light">#EFF6FF</color>
+    <color name="isro_accent">#00A3E0</color>
+    
+    <color name="tactical_green">#16A34A</color>
+    <color name="tactical_green_light">#DCFCE7</color>
+    <color name="tactical_red">#DC2626</color>
+    <color name="tactical_red_light">#FEE2E2</color>
+    <color name="tactical_amber">#D97706</color>
+
+    <color name="bg_page">#F8FAFC</color>
+    <color name="bg_surface">#FFFFFF</color>
+    <color name="text_primary">#0F172A</color>
+    <color name="text_secondary">#475569</color>
+    <color name="text_muted">#94A3B8</color>
+    <color name="border_color">#E2E8F0</color>
+</resources>
