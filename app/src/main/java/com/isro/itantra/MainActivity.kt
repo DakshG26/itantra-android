@@ -47,7 +47,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var tvHexTokenBar: TextView
     private lateinit var btnPtt: Button
     private lateinit var etMessage: EditText
-    private lateinit var btnSend: ImageButton
+    private lateinit var btnSend: Button
 
     // Presets
     private lateinit var btnPresetHindi: Button
