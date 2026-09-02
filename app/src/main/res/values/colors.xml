@@ -1,20 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="isro_blue">#0057B8</color>
-    <color name="isro_blue_dark">#0A2540</color>
-    <color name="isro_blue_light">#EFF6FF</color>
-    <color name="isro_accent">#00A3E0</color>
-    
-    <color name="tactical_green">#16A34A</color>
-    <color name="tactical_green_light">#DCFCE7</color>
-    <color name="tactical_red">#DC2626</color>
-    <color name="tactical_red_light">#FEE2E2</color>
-    <color name="tactical_amber">#D97706</color>
+    <!-- Stitch Orbital Command Tactical Theme -->
+    <color name="bg_page">#0F131F</color>
+    <color name="bg_surface">#161B28</color>
+    <color name="bg_surface_elevated">#1B1F2B</color>
+    <color name="bg_surface_highest">#262A36</color>
 
-    <color name="bg_page">#F8FAFC</color>
-    <color name="bg_surface">#FFFFFF</color>
-    <color name="text_primary">#0F172A</color>
-    <color name="text_secondary">#475569</color>
-    <color name="text_muted">#94A3B8</color>
-    <color name="border_color">#E2E8F0</color>
+    <color name="isro_blue">#FF9D33</color> <!-- Saffron Tactical Accent -->
+    <color name="isro_blue_dark">#FFC490</color>
+    <color name="isro_blue_light">#2A1E14</color>
+    <color name="isro_accent">#FF9D33</color>
+
+    <color name="text_primary">#DFE2F3</color>
+    <color name="text_secondary">#DAC2B0</color>
+    <color name="text_muted">#7A889B</color>
+
+    <color name="tactical_green">#56FFA7</color>
+    <color name="tactical_green_light">#143825</color>
+    <color name="tactical_red">#FFB4AB</color>
+    <color name="tactical_red_light">#401311</color>
+    <color name="tactical_amber">#FFB77A</color>
+
+    <color name="bubble_outgoing">#332014</color>
+    <color name="bubble_incoming">#1B1F2B</color>
 </resources>
