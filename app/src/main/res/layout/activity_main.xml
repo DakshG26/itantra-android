@@ -1,402 +1,551 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@color/bg_page">
 
-    <!-- ── Top Header Bar ── -->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/bg_surface"
-        android:elevation="2dp"
-        android:orientation="vertical"
-        android:padding="12dp">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
+        <!-- ─── 1. Top Mission Glass Header ─── -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
+            android:background="@color/bg_surface"
+            android:elevation="2dp"
+            android:orientation="vertical">
 
-            <ImageView
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:src="@android:drawable/ic_dialog_info"
-                app:tint="@color/isro_blue" />
-
+            <!-- Mission Active Ticker Bar -->
             <LinearLayout
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_weight="1"
-                android:orientation="vertical">
+                android:background="@color/bg_surface_low"
+                android:orientation="horizontal"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:paddingTop="4dp"
+                android:paddingBottom="4dp"
+                android:gravity="center_vertical">
 
-                <LinearLayout
+                <View
+                    android:id="@+id/statusIndicator"
+                    android:layout_width="8dp"
+                    android:layout_height="8dp"
+                    android:background="@color/isro_blue" />
+
+                <TextView
+                    android:id="@+id/tvP2pStatus"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal">
+                    android:text=" MISSION ACTIVE • 1.2 kbps"
+                    android:textColor="@color/isro_blue"
+                    android:textSize="10sp"
+                    android:textStyle="bold"
+                    android:layout_marginStart="4dp" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="iTANTRA"
-                        android:textColor="@color/isro_blue_dark"
-                        android:textSize="16sp"
-                        android:textStyle="bold" />
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="6dp"
-                        android:background="@color/isro_blue_light"
-                        android:paddingStart="6dp"
-                        android:paddingEnd="6dp"
-                        android:paddingTop="2dp"
-                        android:paddingBottom="2dp"
-                        android:text="ISRO SIH26173"
-                        android:fontFamily="monospace"
-                        android:textColor="@color/isro_blue"
-                        android:textSize="10sp"
-                        android:textStyle="bold" />
-                </LinearLayout>
+                <TextView
+                    android:id="@+id/tvCompressionStats"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="2,666× SAVINGS"
+                    android:textColor="@color/text_secondary"
+                    android:textSize="10sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <!-- Brand Header -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:orientation="horizontal"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:gravity="center_vertical">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Offline Transceiver (24 bps • 0% Internet)"
-                    android:textColor="@color/text_muted"
-                    android:textSize="11sp" />
-            </LinearLayout>
+                    android:text="iTantra"
+                    android:textColor="@color/text_primary"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
 
-            <Button
-                android:id="@+id/btnSos"
-                style="@style/Widget.Material3.Button.TonalButton"
-                android:layout_width="wrap_content"
-                android:layout_height="36dp"
-                android:backgroundTint="@color/tactical_red_light"
-                android:text="🚨 SOS"
-                android:textColor="@color/tactical_red"
-                android:textSize="11sp"
-                android:textStyle="bold" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="ISRO SIH26173"
+                    android:textColor="@color/isro_blue"
+                    android:textSize="10sp"
+                    android:textStyle="bold"
+                    android:background="@color/isro_blue_light"
+                    android:paddingStart="6dp"
+                    android:paddingEnd="6dp"
+                    android:paddingTop="2dp"
+                    android:paddingBottom="2dp"
+                    android:layout_marginStart="8dp" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1" />
+
+                <TextView
+                    android:id="@+id/tvChannelCode"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="#001"
+                    android:textColor="@color/isro_blue"
+                    android:textSize="13sp"
+                    android:textStyle="bold"
+                    android:background="@color/bg_surface_container"
+                    android:paddingStart="10dp"
+                    android:paddingEnd="10dp"
+                    android:paddingTop="4dp"
+                    android:paddingBottom="4dp" />
+            </LinearLayout>
         </LinearLayout>
 
-        <!-- ── 3-Digit Radio Channel Code Card ── -->
-        <androidx.cardview.widget.CardView
+        <!-- ─── 2. Main Scrollable Content ─── -->
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            app:cardCornerRadius="12dp"
-            app:cardElevation="0dp"
-            app:cardBackgroundColor="@color/isro_blue_light">
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:fillViewport="true">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:padding="10dp">
+                android:padding="14dp">
 
-                <!-- Channel Code Display & Connect Bar -->
+                <!-- Auto Peer Discovery Banner -->
+                <Button
+                    android:id="@+id/btnAutoFoundPeer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="📡 Peer Found on Mesh (Tap to Link)"
+                    android:textColor="@color/bg_surface_card"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    android:backgroundTint="@color/isro_blue"
+                    android:visibility="gone"
+                    android:layout_marginBottom="10dp" />
+
+                <!-- Network Spectrum & Neural Link Card -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal">
+                    android:background="@drawable/bg_card_clean"
+                    android:orientation="vertical"
+                    android:padding="14dp"
+                    android:layout_marginBottom="12dp">
 
                     <LinearLayout
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical">
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:layout_marginBottom="6dp">
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="YOUR CHANNEL:"
-                            android:fontFamily="monospace"
+                            android:text="📡 Network Spectrum • 24 bps"
+                            android:textColor="@color/text_primary"
+                            android:textSize="13sp"
+                            android:textStyle="bold" />
+
+                        <View
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
+                            android:layout_weight="1" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="UPLINK ACTIVE"
                             android:textColor="@color/isro_blue"
                             android:textSize="9sp"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:id="@+id/tvChannelCode"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="monospace"
-                            android:text="#101"
-                            android:textColor="@color/isro_blue_dark"
-                            android:textSize="18sp"
-                            android:textStyle="bold" />
+                            android:textStyle="bold"
+                            android:background="@color/isro_blue_light"
+                            android:paddingStart="6dp"
+                            android:paddingEnd="6dp"
+                            android:paddingTop="2dp"
+                            android:paddingBottom="2dp" />
                     </LinearLayout>
 
-                    <!-- Quick 3-Digit Connect Input -->
-                    <LinearLayout
-                        android:layout_width="0dp"
+                    <!-- Wave Visualizer Text -->
+                    <TextView
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="12dp"
-                        android:layout_weight="1"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal">
+                        android:text=" ▂▃▅▆▇█▇▆▅▃ ▂▃▅▆▇█▇▆▅▃ ▂▃▅▆▇█"
+                        android:textColor="@color/isro_blue"
+                        android:textSize="16sp"
+                        android:gravity="center"
+                        android:background="@color/bg_surface_low"
+                        android:padding="8dp" />
+
+                    <!-- STT / TTS Metrics Grid -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="8dp">
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:background="@color/bg_surface_low"
+                            android:padding="8dp"
+                            android:orientation="vertical"
+                            android:layout_marginEnd="4dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="INCOMING (STT)"
+                                android:textColor="@color/text_secondary"
+                                android:textSize="9sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="98.4%"
+                                android:textColor="@color/text_primary"
+                                android:textSize="18sp"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:background="@color/bg_surface_low"
+                            android:padding="8dp"
+                            android:orientation="vertical"
+                            android:layout_marginStart="4dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="OUTGOING (TTS)"
+                                android:textColor="@color/text_secondary"
+                                android:textSize="9sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="99.1%"
+                                android:textColor="@color/isro_blue"
+                                android:textSize="18sp"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <!-- Language Selector Spinner -->
+                    <Spinner
+                        android:id="@+id/spLanguage"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:background="@color/bg_surface_low"
+                        android:layout_marginTop="8dp" />
+                </LinearLayout>
+
+                <!-- Offline 3-Digit Channel Linker -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_card_clean"
+                    android:orientation="vertical"
+                    android:padding="12dp"
+                    android:layout_marginBottom="12dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Offline 3-Digit Direct Linker"
+                        android:textColor="@color/text_primary"
+                        android:textSize="12sp"
+                        android:textStyle="bold"
+                        android:layout_marginBottom="6dp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical">
 
                         <EditText
                             android:id="@+id/etTargetCode"
                             android:layout_width="0dp"
-                            android:layout_height="36dp"
+                            android:layout_height="44dp"
                             android:layout_weight="1"
-                            android:background="@android:drawable/edit_text"
-                            android:fontFamily="monospace"
-                            android:gravity="center"
-                            android:hint="3-Digit #"
+                            android:hint="Type # (e.g. 125)"
                             android:inputType="number"
-                            android:maxLength="3"
-                            android:paddingStart="6dp"
-                            android:paddingEnd="6dp"
+                            android:maxLength="4"
+                            android:textColor="@color/text_primary"
+                            android:textColorHint="@color/text_muted"
                             android:textSize="13sp"
-                            android:textStyle="bold" />
+                            android:background="@color/bg_surface_low"
+                            android:paddingStart="12dp"
+                            android:paddingEnd="12dp" />
 
                         <Button
                             android:id="@+id/btnConnectCode"
-                            style="@style/Widget.Material3.Button"
                             android:layout_width="wrap_content"
-                            android:layout_height="36dp"
-                            android:layout_marginStart="4dp"
+                            android:layout_height="44dp"
+                            android:text="Link Phone"
+                            android:textColor="@color/bg_surface_card"
+                            android:textSize="12sp"
+                            android:textStyle="bold"
                             android:backgroundTint="@color/isro_blue"
-                            android:paddingStart="10dp"
-                            android:paddingEnd="10dp"
-                            android:text="Link #"
-                            android:textColor="@color/bg_surface"
-                            android:textSize="11sp" />
+                            android:layout_marginStart="8dp" />
+
+                        <Button
+                            android:id="@+id/btnBluetoothScan"
+                            android:layout_width="wrap_content"
+                            android:layout_height="44dp"
+                            android:text="BT Scan"
+                            android:textColor="@color/isro_blue"
+                            android:textSize="11sp"
+                            android:textStyle="bold"
+                            android:backgroundTint="@color/isro_blue_light"
+                            android:layout_marginStart="6dp" />
                     </LinearLayout>
                 </LinearLayout>
 
-                <!-- Auto-Found Peer Quick Button Banner (Visible when UDP finds a peer) -->
-                <Button
-                    android:id="@+id/btnAutoFoundPeer"
-                    style="@style/Widget.Material3.Button.TonalButton"
+                <!-- Indic Quick Presets Bar -->
+                <HorizontalScrollView
                     android:layout_width="match_parent"
-                    android:layout_height="32dp"
-                    android:layout_marginTop="6dp"
-                    android:backgroundTint="@color/tactical_green_light"
-                    android:text="📡 Found Radio Node #001 — Tap to Link Instantly"
-                    android:textColor="@color/tactical_green"
-                    android:textSize="10sp"
-                    android:textStyle="bold"
-                    android:visibility="gone" />
+                    android:layout_height="wrap_content"
+                    android:scrollbars="none"
+                    android:layout_marginBottom="12dp">
 
-                <!-- Action Buttons: Bluetooth Scan & More -->
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <Button
+                            android:id="@+id/btnPresetHindi"
+                            android:layout_width="wrap_content"
+                            android:layout_height="36dp"
+                            android:text="🇮🇳 Chamoli Alert"
+                            android:textColor="@color/text_secondary"
+                            android:textSize="11sp"
+                            android:backgroundTint="@color/bg_surface_card"
+                            android:layout_marginEnd="6dp" />
+
+                        <Button
+                            android:id="@+id/btnPresetTamil"
+                            android:layout_width="wrap_content"
+                            android:layout_height="36dp"
+                            android:text="🌊 Tamil Coastal"
+                            android:textColor="@color/text_secondary"
+                            android:textSize="11sp"
+                            android:backgroundTint="@color/bg_surface_card"
+                            android:layout_marginEnd="6dp" />
+
+                        <Button
+                            android:id="@+id/btnPresetMarathi"
+                            android:layout_width="wrap_content"
+                            android:layout_height="36dp"
+                            android:text="⛰️ Ghats Landslide"
+                            android:textColor="@color/text_secondary"
+                            android:textSize="11sp"
+                            android:backgroundTint="@color/bg_surface_card"
+                            android:layout_marginEnd="6dp" />
+
+                        <Button
+                            android:id="@+id/btnPresetEnglish"
+                            android:layout_width="wrap_content"
+                            android:layout_height="36dp"
+                            android:text="📡 ISRO Base"
+                            android:textColor="@color/text_secondary"
+                            android:textSize="11sp"
+                            android:backgroundTint="@color/bg_surface_card"
+                            android:layout_marginEnd="6dp" />
+
+                        <Button
+                            android:id="@+id/btnSos"
+                            android:layout_width="wrap_content"
+                            android:layout_height="36dp"
+                            android:text="🚨 SOS"
+                            android:textColor="@color/tactical_red"
+                            android:textSize="11sp"
+                            android:textStyle="bold"
+                            android:backgroundTint="@color/tactical_red_light" />
+                    </LinearLayout>
+                </HorizontalScrollView>
+
+                <!-- Tactical Comms Chat Stream -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="6dp"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal">
-
-                    <View
-                        android:id="@+id/statusIndicator"
-                        android:layout_width="8dp"
-                        android:layout_height="8dp"
-                        android:background="@color/tactical_green" />
+                    android:background="@drawable/bg_card_clean"
+                    android:orientation="vertical"
+                    android:padding="12dp"
+                    android:layout_marginBottom="12dp">
 
                     <TextView
-                        android:id="@+id/tvP2pStatus"
-                        android:layout_width="0dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="6dp"
-                        android:layout_weight="1"
+                        android:text="Tactical Comms Stream"
+                        android:textColor="@color/text_primary"
+                        android:textSize="13sp"
+                        android:textStyle="bold"
+                        android:layout_marginBottom="6dp" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rvMessages"
+                        android:layout_width="match_parent"
+                        android:layout_height="220dp"
+                        android:clipToPadding="false"
+                        tools:listitem="@layout/item_message" />
+
+                    <!-- Live Hex Token Bar -->
+                    <TextView
+                        android:id="@+id/tvHexTokenBar"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="📦 18B Hex Token: Ready"
+                        android:textColor="@color/isro_accent"
+                        android:textSize="10sp"
                         android:fontFamily="monospace"
-                        android:text="Standby • Ready for incoming radio"
-                        android:textColor="@color/text_secondary"
-                        android:textSize="10sp" />
+                        android:background="@color/bg_surface_low"
+                        android:padding="6dp"
+                        android:layout_marginTop="6dp" />
+                </LinearLayout>
+
+                <!-- Text Input & Send Bar -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+
+                    <EditText
+                        android:id="@+id/etMessage"
+                        android:layout_width="0dp"
+                        android:layout_height="48dp"
+                        android:layout_weight="1"
+                        android:hint="Type tactical dispatch..."
+                        android:textColor="@color/text_primary"
+                        android:textColorHint="@color/text_muted"
+                        android:textSize="13sp"
+                        android:background="@drawable/bg_card_clean"
+                        android:paddingStart="14dp"
+                        android:paddingEnd="14dp" />
 
                     <Button
-                        android:id="@+id/btnBluetoothScan"
-                        style="@style/Widget.Material3.Button.OutlinedButton"
+                        android:id="@+id/btnSend"
                         android:layout_width="wrap_content"
-                        android:layout_height="28dp"
-                        android:paddingStart="6dp"
-                        android:paddingEnd="6dp"
-                        android:text="🔵 Bluetooth"
-                        android:textSize="10sp" />
+                        android:layout_height="48dp"
+                        android:text="Send"
+                        android:textColor="@color/bg_surface_card"
+                        android:textSize="13sp"
+                        android:textStyle="bold"
+                        android:backgroundTint="@color/isro_blue"
+                        android:layout_marginStart="8dp" />
                 </LinearLayout>
             </LinearLayout>
-        </androidx.cardview.widget.CardView>
-    </LinearLayout>
+        </ScrollView>
 
-    <!-- ── Language Selector Bar ── -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/bg_surface"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:paddingStart="12dp"
-        android:paddingEnd="12dp"
-        android:paddingTop="4dp"
-        android:paddingBottom="4dp">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Voice Lang:"
-            android:textColor="@color/text_secondary"
-            android:textSize="11sp"
-            android:textStyle="bold" />
-
-        <Spinner
-            android:id="@+id/spLanguage"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="6dp" />
-
-        <View
-            android:layout_width="0dp"
-            android:layout_height="1dp"
-            android:layout_weight="1" />
-
-        <TextView
-            android:id="@+id/tvCompressionStats"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="monospace"
-            android:text="18B • 2,666× savings"
-            android:textColor="@color/tactical_green"
-            android:textSize="10sp"
-            android:textStyle="bold" />
-    </LinearLayout>
-
-    <!-- ── Quick Indic Preset Buttons Bar ── -->
-    <HorizontalScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/bg_page"
-        android:paddingStart="8dp"
-        android:paddingEnd="8dp"
-        android:paddingTop="4dp"
-        android:paddingBottom="4dp"
-        android:scrollbars="none">
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <Button
-                android:id="@+id/btnPresetHindi"
-                style="@style/Widget.Material3.Button.OutlinedButton"
-                android:layout_width="wrap_content"
-                android:layout_height="32dp"
-                android:layout_marginEnd="4dp"
-                android:paddingStart="8dp"
-                android:paddingEnd="8dp"
-                android:text="🇮🇳 Hindi Alert"
-                android:textSize="10sp" />
-
-            <Button
-                android:id="@+id/btnPresetTamil"
-                style="@style/Widget.Material3.Button.OutlinedButton"
-                android:layout_width="wrap_content"
-                android:layout_height="32dp"
-                android:layout_marginEnd="4dp"
-                android:paddingStart="8dp"
-                android:paddingEnd="8dp"
-                android:text="🌊 Tamil Rescue"
-                android:textSize="10sp" />
-
-            <Button
-                android:id="@+id/btnPresetMarathi"
-                style="@style/Widget.Material3.Button.OutlinedButton"
-                android:layout_width="wrap_content"
-                android:layout_height="32dp"
-                android:layout_marginEnd="4dp"
-                android:paddingStart="8dp"
-                android:paddingEnd="8dp"
-                android:text="⛰️ Marathi Landslide"
-                android:textSize="10sp" />
-
-            <Button
-                android:id="@+id/btnPresetEnglish"
-                style="@style/Widget.Material3.Button.OutlinedButton"
-                android:layout_width="wrap_content"
-                android:layout_height="32dp"
-                android:paddingStart="8dp"
-                android:paddingEnd="8dp"
-                android:text="📡 ISRO Mission"
-                android:textSize="10sp" />
-        </LinearLayout>
-    </HorizontalScrollView>
-
-    <!-- ── Message Thread ── -->
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvMessages"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:padding="8dp"
-        tools:listitem="@layout/item_message" />
-
-    <!-- ── Hex Token Bar ── -->
-    <TextView
-        android:id="@+id/tvHexTokenBar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/isro_blue_dark"
-        android:fontFamily="monospace"
-        android:gravity="center"
-        android:padding="4dp"
-        android:text="[0x54 0x01 0x00 0x8A 0x3F 0x1B 0x4C 0x82 0x9D 0x31 0xFA 0x07 0x88 0x93 0x2C 0xE1 0x4F 0x92]"
-        android:textColor="@color/isro_accent"
-        android:textSize="9sp" />
-
-    <!-- ── Bottom Input & Push-To-Talk Bar ── -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/bg_surface"
-        android:elevation="4dp"
-        android:orientation="vertical"
-        android:padding="8dp">
-
+        <!-- ─── 3. Floating PTT Button ─── -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
+            android:orientation="vertical"
+            android:gravity="center"
+            android:paddingBottom="8dp">
 
             <Button
                 android:id="@+id/btnPtt"
-                style="@style/Widget.Material3.Button"
-                android:layout_width="wrap_content"
-                android:layout_height="44dp"
+                android:layout_width="74dp"
+                android:layout_height="74dp"
+                android:text="🎤\nPTT"
+                android:textColor="@color/bg_surface_card"
+                android:textSize="13sp"
+                android:textStyle="bold"
                 android:backgroundTint="@color/isro_blue"
-                android:text="🎙️ Mic"
-                android:textSize="12sp"
-                android:textStyle="bold" />
+                android:elevation="6dp" />
 
-            <EditText
-                android:id="@+id/etMessage"
+            <TextView
+                android:id="@+id/tvStatus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Hold to Speak"
+                android:textColor="@color/text_secondary"
+                android:textSize="11sp"
+                android:background="@color/bg_surface_card"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
+                android:paddingTop="2dp"
+                android:paddingBottom="2dp"
+                android:layout_marginTop="2dp"
+                android:elevation="1dp" />
+        </LinearLayout>
+
+        <!-- ─── 4. Bottom Navigation Bar ─── -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:background="@color/bg_surface"
+            android:orientation="horizontal"
+            android:elevation="4dp">
+
+            <TextView
                 android:layout_width="0dp"
-                android:layout_height="44dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginEnd="8dp"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background="@android:drawable/edit_text"
-                android:hint="@string/hint_type_message"
-                android:paddingStart="12dp"
-                android:paddingEnd="12dp"
-                android:textSize="13sp" />
+                android:text="Dashboard"
+                android:textColor="@color/isro_blue"
+                android:textSize="11sp"
+                android:textStyle="bold"
+                android:gravity="center" />
 
-            <ImageButton
-                android:id="@+id/btnSend"
-                android:layout_width="44dp"
-                android:layout_height="44dp"
-                android:background="?attr/selectableItemBackground"
-                android:src="@android:drawable/ic_menu_send"
-                app:tint="@color/isro_blue"
-                android:contentDescription="Transmit" />
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="Logs"
+                android:textColor="@color/text_secondary"
+                android:textSize="11sp"
+                android:textStyle="bold"
+                android:gravity="center" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="Languages"
+                android:textColor="@color/text_secondary"
+                android:textSize="11sp"
+                android:textStyle="bold"
+                android:gravity="center" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="Config"
+                android:textColor="@color/text_secondary"
+                android:textSize="11sp"
+                android:textStyle="bold"
+                android:gravity="center" />
         </LinearLayout>
     </LinearLayout>
 
-</LinearLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

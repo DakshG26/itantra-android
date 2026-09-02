@@ -1,26 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Stitch Orbital Command Tactical Theme -->
-    <color name="bg_page">#0F131F</color>
-    <color name="bg_surface">#161B28</color>
-    <color name="bg_surface_elevated">#1B1F2B</color>
-    <color name="bg_surface_highest">#262A36</color>
+    <!-- Stitch Clean Tech Color Palette -->
+    <color name="bg_page">#F7F9FB</color>
+    <color name="bg_surface">#F7F9FB</color>
+    <color name="bg_surface_card">#FFFFFF</color>
+    <color name="bg_surface_low">#F2F4F6</color>
+    <color name="bg_surface_container">#ECEEF0</color>
+    <color name="bg_surface_high">#E6E8EA</color>
+    <color name="bg_surface_highest">#E0E3E5</color>
 
-    <color name="isro_blue">#FF9D33</color> <!-- Saffron Tactical Accent -->
-    <color name="isro_blue_dark">#FFC490</color>
-    <color name="isro_blue_light">#2A1E14</color>
-    <color name="isro_accent">#FF9D33</color>
+    <color name="isro_blue">#00478D</color>
+    <color name="isro_blue_dark">#001B3D</color>
+    <color name="isro_blue_light">#D6E3FF</color>
+    <color name="isro_accent">#005EB8</color>
 
-    <color name="text_primary">#DFE2F3</color>
-    <color name="text_secondary">#DAC2B0</color>
-    <color name="text_muted">#7A889B</color>
+    <color name="text_primary">#191C1E</color>
+    <color name="text_secondary">#424752</color>
+    <color name="text_muted">#727783</color>
+    <color name="outline_variant">#C2C6D4</color>
 
-    <color name="tactical_green">#56FFA7</color>
-    <color name="tactical_green_light">#143825</color>
-    <color name="tactical_red">#FFB4AB</color>
-    <color name="tactical_red_light">#401311</color>
-    <color name="tactical_amber">#FFB77A</color>
+    <color name="tactical_green">#00875A</color>
+    <color name="tactical_green_light">#E3FCEF</color>
+    <color name="tactical_red">#BA1A1A</color>
+    <color name="tactical_red_light">#FFDAD6</color>
+    <color name="tactical_amber">#FF8B00</color>
 
-    <color name="bubble_outgoing">#332014</color>
-    <color name="bubble_incoming">#1B1F2B</color>
+    <color name="bubble_outgoing">#D6E3FF</color>
+    <color name="bubble_incoming">#FFFFFF</color>
 </resources>

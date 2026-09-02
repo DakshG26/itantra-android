@@ -13,10 +13,10 @@
         android:id="@+id/cardMessage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="start"
-        app:cardCornerRadius="16dp"
+        android:maxWidth="320dp"
+        app:cardCornerRadius="14dp"
         app:cardElevation="1dp"
-        app:cardBackgroundColor="@color/bg_surface">
+        app:cardBackgroundColor="@color/bg_surface_card">
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -24,62 +24,73 @@
             android:orientation="vertical"
             android:padding="12dp">
 
-            <TextView
-                android:id="@+id/tvSosBadge"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="🚨 LEVEL 0 SOS"
-                android:textColor="@color/tactical_red"
-                android:textStyle="bold"
-                android:textSize="11sp"
-                android:visibility="gone"
-                android:layout_marginBottom="4dp" />
-
-            <TextView
-                android:id="@+id/tvMessageText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/text_primary"
-                android:textSize="14sp"
-                android:textStyle="bold" />
-
+            <!-- Meta Top Header -->
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:gravity="center_vertical"
-                android:layout_marginTop="6dp">
+                android:layout_marginBottom="4dp">
 
                 <TextView
-                    android:id="@+id/tvTokenInfo"
+                    android:id="@+id/tvSosBadge"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="18B • RS(32,24)"
-                    android:fontFamily="monospace"
+                    android:text="🚨 SOS"
+                    android:textColor="@color/tactical_red"
                     android:textSize="10sp"
-                    android:textColor="@color/text_muted" />
+                    android:textStyle="bold"
+                    android:background="@color/tactical_red_light"
+                    android:paddingStart="4dp"
+                    android:paddingEnd="4dp"
+                    android:layout_marginEnd="6dp"
+                    android:visibility="gone" />
 
-                <ImageButton
+                <TextView
+                    android:id="@+id/tvTimestamp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="14:02:11 UTC"
+                    android:textColor="@color/text_secondary"
+                    android:textSize="10sp"
+                    android:textStyle="bold" />
+
+                <View
+                    android:layout_width="12dp"
+                    android:layout_height="0dp" />
+
+                <!-- Play Audio Action -->
+                <TextView
                     android:id="@+id/btnPlayTts"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:layout_marginStart="12dp"
-                    android:background="?attr/selectableItemBackgroundBorderless"
-                    android:src="@android:drawable/ic_lock_silent_mode_off"
-                    app:tint="@color/isro_blue"
-                    android:contentDescription="Play Voice" />
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="▶ Play"
+                    android:textColor="@color/isro_blue"
+                    android:textSize="11sp"
+                    android:textStyle="bold"
+                    android:padding="2dp" />
             </LinearLayout>
+
+            <!-- Message Text -->
+            <TextView
+                android:id="@+id/tvMessageText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Target visual confirmed at sector 4."
+                android:textColor="@color/text_primary"
+                android:textSize="14sp"
+                android:lineSpacingExtra="2dp" />
+
+            <!-- Token & RS info -->
+            <TextView
+                android:id="@+id/tvTokenInfo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="18B • HI • RS(255,223)"
+                android:textColor="@color/text_muted"
+                android:textSize="10sp"
+                android:fontFamily="monospace"
+                android:layout_marginTop="4dp" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
-
-    <TextView
-        android:id="@+id/tvTimestamp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="start"
-        android:textSize="9sp"
-        android:fontFamily="monospace"
-        android:textColor="@color/text_muted"
-        android:layout_marginTop="2dp"
-        android:layout_marginStart="4dp" />
 </LinearLayout>
