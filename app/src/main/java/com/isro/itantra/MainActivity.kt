@@ -16,6 +16,7 @@ import android.widget.*
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.SwitchCompat
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -33,19 +34,37 @@ import java.util.*
 
 class MainActivity : AppCompatActivity() {
 
+    // Header & Brand
+    private lateinit var tvHeaderTitle: TextView
     private lateinit var tvChannelCode: TextView
+    private lateinit var tvP2pStatus: TextView
+    private lateinit var statusIndicator: View
+    private lateinit var tvCompressionStats: TextView
+
+    // Layout Containers (4 Screens)
+    private lateinit var layoutDashboard: View
+    private lateinit var layoutLogs: View
+    private lateinit var layoutLanguages: View
+    private lateinit var layoutConfig: View
+    private lateinit var layoutPttBar: View
+
+    // Bottom Navigation Tabs
+    private lateinit var tabDashboard: TextView
+    private lateinit var tabLogs: TextView
+    private lateinit var tabLanguages: TextView
+    private lateinit var tabConfig: TextView
+
+    // Screen 1: Dashboard Views
     private lateinit var etTargetCode: EditText
     private lateinit var btnConnectCode: Button
     private lateinit var btnAutoFoundPeer: Button
-    private lateinit var tvP2pStatus: TextView
-    private lateinit var statusIndicator: View
     private lateinit var btnBluetoothScan: Button
     private lateinit var btnSos: Button
     private lateinit var spLanguage: Spinner
-    private lateinit var tvCompressionStats: TextView
     private lateinit var rvMessages: RecyclerView
     private lateinit var tvHexTokenBar: TextView
     private lateinit var btnPtt: Button
+    private lateinit var tvStatus: TextView
     private lateinit var etMessage: EditText
     private lateinit var btnSend: Button
 
@@ -55,6 +74,27 @@ class MainActivity : AppCompatActivity() {
     private lateinit var btnPresetMarathi: Button
     private lateinit var btnPresetEnglish: Button
 
+    // Screen 2: Logs Views
+    private lateinit var etSearchLogs: EditText
+    private lateinit var btnPlayCriticalLog: Button
+    private lateinit var btnPlayRoutineLog: Button
+    private lateinit var btnLoadOlderLogs: Button
+
+    // Screen 3: Languages Views
+    private lateinit var tvMarathiStatus: TextView
+    private lateinit var tvMarathiSize: TextView
+    private lateinit var pbMarathi: ProgressBar
+    private lateinit var btnGlobalSync: Button
+
+    // Screen 4: Config Views
+    private lateinit var tvConfigBitrateVal: TextView
+    private lateinit var sbBitrate: SeekBar
+    private lateinit var swFec: SwitchCompat
+    private lateinit var swAes: SwitchCompat
+    private lateinit var swMac: SwitchCompat
+    private lateinit var btnHardReset: Button
+
+    // Services
     private lateinit var messageAdapter: MessageAdapter
     private lateinit var offlineTTS: OfflineTTS
     private lateinit var voiceRecorder: VoiceRecorder
@@ -65,6 +105,7 @@ class MainActivity : AppCompatActivity() {
     private var myNodeCode = "NODE-" + UUID.randomUUID().toString().substring(0, 4).uppercase()
     private var myChannelCode = "001"
     private var autoFoundIp: String? = null
+    private var currentTab = "dashboard"
 
     private val discoveredBtDevices = mutableListOf<BluetoothDevice>()
     private var btDevicesAdapter: ArrayAdapter<String>? = null
@@ -112,19 +153,37 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initViews() {
+        // Headers
+        tvHeaderTitle = findViewById(R.id.tvHeaderTitle)
         tvChannelCode = findViewById(R.id.tvChannelCode)
+        tvP2pStatus = findViewById(R.id.tvP2pStatus)
+        statusIndicator = findViewById(R.id.statusIndicator)
+        tvCompressionStats = findViewById(R.id.tvCompressionStats)
+
+        // Tab View Containers
+        layoutDashboard = findViewById(R.id.layoutDashboard)
+        layoutLogs = findViewById(R.id.layoutLogs)
+        layoutLanguages = findViewById(R.id.layoutLanguages)
+        layoutConfig = findViewById(R.id.layoutConfig)
+        layoutPttBar = findViewById(R.id.layoutPttBar)
+
+        // Bottom Tab Buttons
+        tabDashboard = findViewById(R.id.tabDashboard)
+        tabLogs = findViewById(R.id.tabLogs)
+        tabLanguages = findViewById(R.id.tabLanguages)
+        tabConfig = findViewById(R.id.tabConfig)
+
+        // Screen 1: Dashboard Views
         etTargetCode = findViewById(R.id.etTargetCode)
         btnConnectCode = findViewById(R.id.btnConnectCode)
         btnAutoFoundPeer = findViewById(R.id.btnAutoFoundPeer)
-        tvP2pStatus = findViewById(R.id.tvP2pStatus)
-        statusIndicator = findViewById(R.id.statusIndicator)
         btnBluetoothScan = findViewById(R.id.btnBluetoothScan)
         btnSos = findViewById(R.id.btnSos)
         spLanguage = findViewById(R.id.spLanguage)
-        tvCompressionStats = findViewById(R.id.tvCompressionStats)
         rvMessages = findViewById(R.id.rvMessages)
         tvHexTokenBar = findViewById(R.id.tvHexTokenBar)
         btnPtt = findViewById(R.id.btnPtt)
+        tvStatus = findViewById(R.id.tvStatus)
         etMessage = findViewById(R.id.etMessage)
         btnSend = findViewById(R.id.btnSend)
 
@@ -132,6 +191,26 @@ class MainActivity : AppCompatActivity() {
         btnPresetTamil = findViewById(R.id.btnPresetTamil)
         btnPresetMarathi = findViewById(R.id.btnPresetMarathi)
         btnPresetEnglish = findViewById(R.id.btnPresetEnglish)
+
+        // Screen 2: Logs Views
+        etSearchLogs = findViewById(R.id.etSearchLogs)
+        btnPlayCriticalLog = findViewById(R.id.btnPlayCriticalLog)
+        btnPlayRoutineLog = findViewById(R.id.btnPlayRoutineLog)
+        btnLoadOlderLogs = findViewById(R.id.btnLoadOlderLogs)
+
+        // Screen 3: Languages Views
+        tvMarathiStatus = findViewById(R.id.tvMarathiStatus)
+        tvMarathiSize = findViewById(R.id.tvMarathiSize)
+        pbMarathi = findViewById(R.id.pbMarathi)
+        btnGlobalSync = findViewById(R.id.btnGlobalSync)
+
+        // Screen 4: Config Views
+        tvConfigBitrateVal = findViewById(R.id.tvConfigBitrateVal)
+        sbBitrate = findViewById(R.id.sbBitrate)
+        swFec = findViewById(R.id.swFec)
+        swAes = findViewById(R.id.swAes)
+        swMac = findViewById(R.id.swMac)
+        btnHardReset = findViewById(R.id.btnHardReset)
 
         val myIp = getLocalIpAddress() ?: "127.0.0.1"
         tvChannelCode.text = "#$myChannelCode ($myIp)"
@@ -144,6 +223,19 @@ class MainActivity : AppCompatActivity() {
             stackFromEnd = true
         }
         rvMessages.adapter = messageAdapter
+
+        // Initial default messages in log
+        val initPacket1 = RadioPacket(
+            id = "init-1",
+            senderId = "ISRO-BASE",
+            text = "बेस स्टेशन 4: उत्तरी सेक्टर में संचार लिंक सक्रिय। (24 bps)",
+            language = "hi",
+            isSos = false,
+            timestamp = System.currentTimeMillis() - 60000,
+            tokensHex = TokenCompressor.bytesToHex(TokenCompressor.encodeToTokens("बेस स्टेशन 4: उत्तरी सेक्टर में संचार लिंक सक्रिय।", "hi", false)),
+            isSentByMe = false
+        )
+        messageAdapter.addMessage(initPacket1)
 
         // Setup Language Spinner
         val languages = arrayOf("Hindi (हिंदी)", "Tamil (தமிழ்)", "Marathi (मराठी)", "Telugu (తెలుగు)", "Bengali (বাংলা)", "English")
@@ -159,6 +251,12 @@ class MainActivity : AppCompatActivity() {
             }
             override fun onNothingSelected(parent: AdapterView<*>?) {}
         }
+
+        // Setup Bottom Navigation Tab Click Listeners
+        tabDashboard.setOnClickListener { switchTab("dashboard") }
+        tabLogs.setOnClickListener { switchTab("logs") }
+        tabLanguages.setOnClickListener { switchTab("languages") }
+        tabConfig.setOnClickListener { switchTab("config") }
 
         // 3-Digit Channel Connect Button
         btnConnectCode.setOnClickListener {
@@ -228,6 +326,105 @@ class MainActivity : AppCompatActivity() {
             selectedLanguage = "en"
             spLanguage.setSelection(5)
             sendRadioMessage("Base Station 4, oxygen supply critical, initiate evacuation plan.", isSos = false)
+        }
+
+        // Screen 2 (Logs) Action Listeners
+        btnPlayCriticalLog.setOnClickListener {
+            offlineTTS.speak("Proximity alert trigger on external sensor array C-4. Heat signature detected exceeding normal operational parameters by 400%. Recommending immediate manual override of coolant system.", "en")
+        }
+        btnPlayRoutineLog.setOnClickListener {
+            offlineTTS.speak("Hourly telemetry packet received. All life support and navigation systems nominal. Entering communication shadow in T-minus 14 minutes.", "en")
+        }
+        btnLoadOlderLogs.setOnClickListener {
+            val oldPacket = RadioPacket(
+                id = "arch-${System.currentTimeMillis()}",
+                senderId = "BETA-2",
+                text = "Command, telemetry synchronised. Solar array output at 98.4%.",
+                language = "en",
+                isSos = false,
+                timestamp = System.currentTimeMillis() - 7200000,
+                tokensHex = TokenCompressor.bytesToHex(TokenCompressor.encodeToTokens("Command, telemetry synchronised.", "en", false)),
+                isSentByMe = false
+            )
+            messageAdapter.addMessage(oldPacket)
+            Toast.makeText(this, "Archived packet loaded into transceiver stream", Toast.LENGTH_SHORT).show()
+        }
+
+        // Screen 3 (Languages) Action Listeners
+        btnGlobalSync.setOnClickListener {
+            btnGlobalSync.text = "⏳ Synchronizing Neural Models…"
+            btnGlobalSync.isEnabled = false
+            tvMarathiStatus.postDelayed({
+                pbMarathi.progress = 100
+                tvMarathiStatus.text = "Marathi Regional Core • Active"
+                tvMarathiStatus.setTextColor(ContextCompat.getColor(this, R.color.isro_blue))
+                tvMarathiSize.text = "450 MB"
+                btnGlobalSync.text = "✓ Global Sync Complete"
+                btnGlobalSync.isEnabled = true
+                Toast.makeText(this, "All 6 Indic Neural Language Models Synchronized (0% Internet)", Toast.LENGTH_LONG).show()
+            }, 1500)
+        }
+
+        // Screen 4 (Config) Action Listeners
+        sbBitrate.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
+                val formatted = if (progress >= 1000) String.format(Locale.US, "%.1f kbps", progress / 1000.0) else "$progress bps"
+                tvConfigBitrateVal.text = formatted
+                tvP2pStatus.text = " MISSION ACTIVE • $formatted"
+            }
+            override fun onStartTrackingTouch(seekBar: SeekBar?) {}
+            override fun onStopTrackingTouch(seekBar: SeekBar?) {}
+        })
+
+        swFec.setOnCheckedChangeListener { _, isChecked ->
+            Toast.makeText(this, if (isChecked) "Reed-Solomon RS(255,223) FEC Enabled" else "FEC Disabled", Toast.LENGTH_SHORT).show()
+        }
+        swAes.setOnCheckedChangeListener { _, isChecked ->
+            Toast.makeText(this, if (isChecked) "AES-256 Hardware Encryption Active" else "AES-256 Disabled", Toast.LENGTH_SHORT).show()
+        }
+        swMac.setOnCheckedChangeListener { _, isChecked ->
+            Toast.makeText(this, if (isChecked) "Strict MAC Verification Active" else "MAC Verification Disabled", Toast.LENGTH_SHORT).show()
+        }
+
+        btnHardReset.setOnClickListener {
+            AlertDialog.Builder(this)
+                .setTitle("⚠️ Initiate Hard Reset")
+                .setMessage("Reset all radio transceiver buffers and reset P2P mesh link?")
+                .setPositiveButton("Reset") { _, _ ->
+                    sbBitrate.progress = 1200
+                    swFec.isChecked = true
+                    swAes.isChecked = false
+                    swMac.isChecked = true
+                    messageAdapter.clear()
+                    Toast.makeText(this, "Transceiver parameters restored to defaults", Toast.LENGTH_SHORT).show()
+                }
+                .setNegativeButton("Cancel", null)
+                .show()
+        }
+    }
+
+    private fun switchTab(tab: String) {
+        currentTab = tab
+        layoutDashboard.visibility = if (tab == "dashboard") View.VISIBLE else View.GONE
+        layoutLogs.visibility = if (tab == "logs") View.VISIBLE else View.GONE
+        layoutLanguages.visibility = if (tab == "languages") View.VISIBLE else View.GONE
+        layoutConfig.visibility = if (tab == "config") View.VISIBLE else View.GONE
+        layoutPttBar.visibility = if (tab == "dashboard") View.VISIBLE else View.GONE
+
+        val activeColor = ContextCompat.getColor(this, R.color.isro_blue)
+        val inactiveColor = ContextCompat.getColor(this, R.color.text_secondary)
+
+        tabDashboard.setTextColor(if (tab == "dashboard") activeColor else inactiveColor)
+        tabLogs.setTextColor(if (tab == "logs") activeColor else inactiveColor)
+        tabLanguages.setTextColor(if (tab == "languages") activeColor else inactiveColor)
+        tabConfig.setTextColor(if (tab == "config") activeColor else inactiveColor)
+
+        tvHeaderTitle.text = when (tab) {
+            "dashboard" -> "Dashboard"
+            "logs" -> "Transceiver Log"
+            "languages" -> "Languages"
+            "config" -> "Config"
+            else -> "Dashboard"
         }
     }
 
@@ -348,95 +545,92 @@ class MainActivity : AppCompatActivity() {
         val hexString = TokenCompressor.bytesToHex(tokenBytes)
         val ratio = TokenCompressor.calculateCompressionRatio(text)
 
-        tvCompressionStats.text = "18B • ${ratio}× savings"
-        updateHexDisplay(hexString)
-
         val packet = RadioPacket(
+            id = UUID.randomUUID().toString(),
+            senderId = myNodeCode,
             text = text,
             language = selectedLanguage,
             isSos = isSos,
-            senderId = myNodeCode,
+            timestamp = System.currentTimeMillis(),
             tokensHex = hexString,
             isSentByMe = true
         )
 
         messageAdapter.addMessage(packet)
         rvMessages.scrollToPosition(messageAdapter.itemCount - 1)
+        updateHexDisplay(hexString)
+        tvCompressionStats.text = "SAVINGS: ${ratio}×"
 
-        // Transmit over Bluetooth if connected, otherwise over Wi-Fi socket
-        if (bluetoothManager.isConnected()) {
-            bluetoothManager.sendPacket(packet)
-        } else {
-            socketService.sendPacket(packet)
-        }
+        // Broadcast over Wi-Fi / Hotspot Socket
+        socketService.sendPacket(packet)
+
+        // Broadcast over Bluetooth Radio SPP
+        bluetoothManager.sendPacket(packet)
     }
 
     private fun triggerEmergencySos() {
-        triggerVibration()
-        val sosText = "🚨 EMERGENCY SOS: Level 0 Alert from Channel #$myChannelCode [GPS: 30.42°N, 79.33°E]"
+        val sosText = "🚨 EMERGENCY SOS: Level 0 Alert [Chamoli Sector 4 • GPS: 30.42°N, 79.33°E]"
         sendRadioMessage(sosText, isSos = true)
-        offlineTTS.speak("Emergency SOS broadcast transmitted", "en")
+        triggerVibration()
+        offlineTTS.speak("Emergency SOS alert broadcast initiated", "en")
     }
 
     private fun triggerVibration() {
         val vibrator = getSystemService(Context.VIBRATOR_SERVICE) as? Vibrator
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            vibrator?.vibrate(VibrationEffect.createOneShot(500, VibrationEffect.DEFAULT_AMPLITUDE))
+            vibrator?.vibrate(VibrationEffect.createWaveform(longArrayOf(0, 300, 150, 300), -1))
         } else {
             vibrator?.vibrate(500)
         }
     }
 
+    private fun updateHexDisplay(hexString: String) {
+        val formatted = hexString.chunked(2).joinToString(" ") { "0x$it" }
+        tvHexTokenBar.text = "📦 18B Hex Token: $formatted"
+    }
+
     private fun updateHexPreview(text: String) {
-        if (text.isEmpty()) return
-        val tokens = TokenCompressor.encodeToTokens(text, selectedLanguage, false)
-        updateHexDisplay(TokenCompressor.bytesToHex(tokens))
+        if (text.isNotEmpty()) {
+            val tokenBytes = TokenCompressor.encodeToTokens(text, selectedLanguage, isSos = false)
+            val hexString = TokenCompressor.bytesToHex(tokenBytes)
+            updateHexDisplay(hexString)
+        }
     }
 
-    private fun updateHexDisplay(hex: String) {
-        val formatted = hex.chunked(2).joinToString(" ") { "0x$it" }
-        tvHexTokenBar.text = "[$formatted]"
-    }
-
-    // ─── BLUETOOTH DIALOG & SCANNING ───
-    @SuppressLint("MissingPermission")
     private fun showBluetoothScanDialog() {
         discoveredBtDevices.clear()
-        val paired = bluetoothManager.getPairedDevices()
-        discoveredBtDevices.addAll(paired)
-
-        val displayList = discoveredBtDevices.map { dev ->
-            val isBonded = paired.contains(dev)
-            val name = dev.name ?: "Unknown Device"
-            if (isBonded) "🔗 [Paired] $name (${dev.address})" else "📡 [Discovered] $name (${dev.address})"
-        }.toMutableList()
-
-        btDevicesAdapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, displayList)
+        val deviceNames = mutableListOf<String>()
+        btDevicesAdapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, deviceNames)
 
         val builder = AlertDialog.Builder(this)
-            .setTitle("🔵 Bluetooth Radio Scan")
-            .setAdapter(btDevicesAdapter) { _, which ->
-                if (which < discoveredBtDevices.size) {
-                    val targetDevice = discoveredBtDevices[which]
-                    bluetoothManager.connectToDevice(targetDevice)
-                }
+        builder.setTitle("📡 Bluetooth Radio Devices")
+        builder.setAdapter(btDevicesAdapter) { _, which ->
+            if (which in discoveredBtDevices.indices) {
+                val selectedDevice = discoveredBtDevices[which]
+                Toast.makeText(this, "Connecting to ${selectedDevice.name ?: selectedDevice.address}…", Toast.LENGTH_SHORT).show()
+                bluetoothManager.connectToDevice(selectedDevice)
             }
-            .setNeutralButton("Rescan") { _, _ ->
-                bluetoothManager.startDiscovery()
-                showBluetoothScanDialog()
-            }
-            .setNegativeButton("Cancel", null)
+        }
+        builder.setNegativeButton("Cancel") { dialog, _ ->
+            bluetoothManager.unregisterReceiver()
+            dialog.dismiss()
+        }
 
-        btDialog = builder.show()
+        btDialog = builder.create()
+        btDialog?.show()
+
         bluetoothManager.startDiscovery()
     }
 
-    @SuppressLint("MissingPermission")
     private fun addDiscoveredBluetoothDevice(device: BluetoothDevice) {
         if (!discoveredBtDevices.any { it.address == device.address }) {
             discoveredBtDevices.add(device)
-            val name = device.name ?: "Unknown Signal"
-            btDevicesAdapter?.add("📡 [Discovered] $name (${device.address})")
+            val name = if (ActivityCompat.checkSelfPermission(this, Manifest.permission.BLUETOOTH_CONNECT) == PackageManager.PERMISSION_GRANTED) {
+                device.name ?: device.address
+            } else {
+                device.address
+            }
+            btDevicesAdapter?.add("$name\n(${device.address})")
             btDevicesAdapter?.notifyDataSetChanged()
         }
     }
@@ -449,41 +643,26 @@ class MainActivity : AppCompatActivity() {
         )
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-            permissions.add(Manifest.permission.BLUETOOTH_CONNECT)
             permissions.add(Manifest.permission.BLUETOOTH_SCAN)
+            permissions.add(Manifest.permission.BLUETOOTH_CONNECT)
             permissions.add(Manifest.permission.BLUETOOTH_ADVERTISE)
+        } else {
+            permissions.add(Manifest.permission.BLUETOOTH)
+            permissions.add(Manifest.permission.BLUETOOTH_ADMIN)
         }
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            permissions.add(Manifest.permission.NEARBY_WIFI_DEVICES)
-        }
-
-        val missing = permissions.filter {
+        val needed = permissions.filter {
             ContextCompat.checkSelfPermission(this, it) != PackageManager.PERMISSION_GRANTED
         }
 
-        if (missing.isNotEmpty()) {
-            ActivityCompat.requestPermissions(this, missing.toTypedArray(), PERMISSION_REQUEST_CODE)
+        if (needed.isNotEmpty()) {
+            ActivityCompat.requestPermissions(this, needed.toTypedArray(), PERMISSION_REQUEST_CODE)
         }
-    }
-
-    override fun onResume() {
-        super.onResume()
-        bluetoothManager.registerReceiver()
-        computeChannelCode()
-        val myIp = getLocalIpAddress() ?: "127.0.0.1"
-        tvChannelCode.text = "#$myChannelCode ($myIp)"
-    }
-
-    override fun onPause() {
-        super.onPause()
-        bluetoothManager.unregisterReceiver()
     }
 
     override fun onDestroy() {
         super.onDestroy()
         offlineTTS.shutdown()
-        voiceRecorder.destroy()
         socketService.stop()
         bluetoothManager.stop()
         udpDiscovery.stop()
